@@ -103,3 +103,29 @@ npm run smoke   # starts the server over stdio and calls every tool
 
 MIT — see [LICENSE](LICENSE). Copyright (c) 2026 Aridon (Triple R
 Restoration, LLC dba Aridon).
+
+## NetGuard — protection for devices outside the agent path (new in v0.2.0)
+
+Some systems never propose actions to an agent: legacy and OT devices that
+accept commands directly over a network. In November 2026, attackers reached
+end-of-life refrigeration controllers in European supermarkets over the
+internet and ran them hot. NetGuard is the layer for those devices:
+
+1. **Command broker** (`sentinel_register_device`, `sentinel_device_command`):
+   the only identity allowed to command a registered device. Enrolled sources
+   only; parameters outside hard safety limits are denied outright; defrosts
+   and out-of-band changes hold for a human; command text is scored by the
+   same intent engine as agent actions.
+2. **Enforcement plan** (`sentinel_enforcement_plan`): generated segmentation
+   rules (JSON + nftables) making the broker the only reachable path: no
+   internet route to the devices, no device egress.
+3. **Telemetry watchdog** (`sentinel_device_telemetry`): observed state is
+   compared with the last brokered state. A change nobody brokered is treated
+   as tampering: an audit-chained incident and a quarantine rule set.
+
+Test it: `node test/netguard.mjs` replays the supermarket attack end to end
+(18 checks). Honest scope: NetGuard protects devices enrolled in its registry
+behind the enforcement rules it generates; it does not patch the devices.
+Development-stage technical preview, internal testing only, no customers yet.
+We are looking for lab testing partners, especially controller manufacturers
+and food-retail operators. Contact: jimrusk66@gmail.com.
