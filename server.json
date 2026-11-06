@@ -1,1 +1,23 @@
-{"$schema":"https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json","description":"Pre-execution authorization for AI agent actions: allow, hold for a human, or deny.","name":"io.github.jimrusk/sentinel-mcp","packages":[{"identifier":"@aridon/sentinel-mcp","registryType":"npm","runtimeHint":"npx","transport":{"type":"stdio"},"version":"0.1.0"}],"repository":{"source":"github","url":"https://github.com/jimrusk/aridon-app"},"title":"Sentinel by Aridon","version":"0.1.0","websiteUrl":"https://aridon-v02.vercel.app/sentinel"}
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "description": "Pre-execution authorization for AI agent actions: allow, hold for a human, or deny.",
+  "name": "io.github.jimrusk/sentinel-mcp",
+  "packages": [
+    {
+      "identifier": "@aridon/sentinel-mcp",
+      "registryType": "npm",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "version": "0.1.0"
+    }
+  ],
+  "repository": {
+    "source": "github",
+    "url": "https://github.com/jimrusk/sentinel-mcp"
+  },
+  "title": "Sentinel by Aridon",
+  "version": "0.1.0",
+  "websiteUrl": "https://aridon-v02.vercel.app/sentinel-demo"
+}
