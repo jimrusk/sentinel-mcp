@@ -1,21 +1,26 @@
-# Sentinel MCP Server — by Aridon
+# Sentinel MCP Server, by Aridon
 
-An MCP (Model Context Protocol) server that puts **Sentinel**, Aridon's
-pre-execution authorization layer for AI agents, in front of any MCP client.
-Before an agent acts, Sentinel evaluates the proposed action and returns a
-verdict — **allow**, **hold** (a human must approve first), or **deny** — and
-records the decision in a SHA-256 hash-chained audit log.
+**Sentinel is the action-control platform for AI agents.** This MCP (Model
+Context Protocol) server puts Sentinel in front of any MCP client. Before an
+agent acts, Sentinel evaluates the proposed action and returns a verdict:
+**allow**, **hold** (a human must approve first), or **deny**. Every decision
+is recorded in a SHA-256 hash-chained audit log.
 
-> **Honest stage — read this first.** Sentinel is a **development-stage
-> technical preview**. It has been validated in internal synthetic testing
-> only (September 2026 harness: 18/18 scenarios passed, 13/13 hostile actions
-> held pre-execution, 0 false positives). It has **no customers and no
-> revenue**, has **not** had an independent penetration test, and carries **no
-> SOC 2 / ISO / FedRAMP certification**. The evaluation is heuristic, not a
-> guarantee of safety. This package is a small, working slice of Sentinel,
-> published so agents and developers can try the evaluation model — it is
-> **not the full Sentinel product** (no hosted policy store, no tenant
-> management, no approval-workflow UI, no persistent audit storage).
+- **Live demo:** https://aridon-v02.vercel.app/sentinel-demo
+- **Paper:** Sentinel and NetGuard design paper, Zenodo,
+  https://doi.org/10.5281/zenodo.23920785
+- **npm:** `@aridon/sentinel-mcp`
+
+> **Results and stage, stated plainly.** In our internal test harness
+> (September 2026, internal synthetic testing): **18/18 scenarios passed, 13
+> hostile actions held before execution, 0 false positives.** Sentinel is in
+> **early access**, and we are opening design-partner pilot conversations
+> now. This package is a small, working slice of Sentinel, published so
+> agents and developers can try the evaluation model. It is **not the full
+> Sentinel product** (no hosted policy store, no tenant management, no
+> approval-workflow UI, no persistent audit storage). The evaluation is
+> heuristic, not a guarantee of safety, and it has not had an independent
+> penetration test or SOC 2 / ISO / FedRAMP certification.
 
 ## Tools
 
@@ -41,7 +46,7 @@ database writes/deletes, credential or secret access, network requests, file
 deletion): those require human approval even when the content looks benign,
 and are denied outright when risk is elevated. Risk also accumulates across
 conversation turns, and a clearly authorized defensive context (your own
-systems, a lab, blue-team work) lowers the score — without disabling checks —
+systems, a lab, blue-team work) lowers the score without disabling checks,
 unless the action text itself carries clearly harmful language.
 
 The evaluation and audit code in this package is the real Sentinel logic,
@@ -97,14 +102,15 @@ npm run smoke   # starts the server over stdio and calls every tool
 
 - Source (Aridon app monorepo): https://github.com/jimrusk/aridon-app
 - MCP Registry name: `io.github.jimrusk/sentinel-mcp` (see `server.json`)
-- Product page: https://aridon-v02.vercel.app/sentinel
+- Product page and live demo: https://aridon-v02.vercel.app/sentinel-demo
+- Paper (Zenodo): https://doi.org/10.5281/zenodo.23920785
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Copyright (c) 2026 Aridon (Triple R
+MIT, see [LICENSE](LICENSE). Copyright (c) 2026 Aridon (Triple R
 Restoration, LLC dba Aridon).
 
-## NetGuard — protection for devices outside the agent path (new in v0.2.0)
+## NetGuard: protection for devices outside the agent path (new in v0.2.0)
 
 Some systems never propose actions to an agent: legacy and OT devices that
 accept commands directly over a network. In November 2026, attackers reached
@@ -126,6 +132,7 @@ internet and ran them hot. NetGuard is the layer for those devices:
 Test it: `node test/netguard.mjs` replays the supermarket attack end to end
 (18 checks). Honest scope: NetGuard protects devices enrolled in its registry
 behind the enforcement rules it generates; it does not patch the devices.
-Development-stage technical preview, internal testing only, no customers yet.
-We are looking for lab testing partners, especially controller manufacturers
-and food-retail operators. Contact: jimrusk66@gmail.com.
+NetGuard is in the same early access stage as the rest of Sentinel, validated
+in internal testing only. We are looking for lab testing partners, especially
+controller manufacturers and food-retail operators. Contact:
+jimrusk66@gmail.com.
